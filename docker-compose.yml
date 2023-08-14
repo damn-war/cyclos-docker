@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  users_sync:
+    build: ./user_sync/
+    volumes:
+      - ./import:/import
+      - ./export:/export
+    environment:
+      - FSTL_CYCLOS_ADMIN_USERNAME=${FSTL_CYCLOS_ADMIN_USERNAME}
+      - FSTL_CYCLOS_ADMIN_PASSWORD=${FSTL_CYCLOS_ADMIN_PASSWORD}
