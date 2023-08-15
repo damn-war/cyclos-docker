@@ -28,7 +28,6 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v4
         with:
-          context: ./user_sync
           file: ./user_sync/Dockerfile
           push: true
           tags: damnwar/cyclos-docker:latest 
