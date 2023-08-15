@@ -2,6 +2,7 @@ version: "3.9"
 services:
   users_sync:
     build: ./user_sync/
+    # image: # Alternative  
     volumes:
       - ./import:/import
       - ./export:/export

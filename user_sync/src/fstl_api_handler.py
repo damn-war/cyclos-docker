@@ -52,7 +52,7 @@ class fstl_api:
 
     def get_users(
         self, group: list = [""], role: list = [""], status: list = ["active"]
-    ):
+    ) -> list:
         """
         get all user accounts
         :param group: only get users in the given groups
@@ -80,7 +80,6 @@ class fstl_api:
 
     def check_if_user_exists(self, check_string: str = ""):
         users = self.get_users()
-        print(users)
         if any(user_item["display"] == check_string for user_item in users):
             return True
         else:
@@ -95,7 +94,6 @@ class fstl_api:
         :param group: the group of the user
         :return: if succes: json object with the users, else: False
         """
-        print(params)
         data = {
             "name": params["name"],
             "username": params["username"],
@@ -113,15 +111,16 @@ class fstl_api:
             data["customValues"]["sorgeberechtigte"] = params["sorgeberechtigte"]
         if "kinder" in params:
             data["customValues"]["kinder"] = params["kinder"]
-        response = requests.post(
-            f"{self.url}/users",
-            json=data,
-            headers={"Accept": "application/json", "Content-Type": "application/json"},
-            auth=self.auth,
-            verify=self.verify,
-        )
-        print(response.content)
-        return evaluate_response(response)
+        #response = requests.post(
+        #    f"{self.url}/users",
+        #    json=data,
+        #    headers={"Accept": "application/json", "Content-Type": "application/json"},
+        #    auth=self.auth,
+        #    verify=self.verify,
+        #)
+        print(data)
+        return True
+        #return evaluate_response(response)
 
     def add_broker_to_user(
         self, user: str, broker: str, main_broker: bool = False

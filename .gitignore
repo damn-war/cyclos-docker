@@ -1,4 +1,5 @@
 .env
 import/
 export/
-
+data/
+venv/
