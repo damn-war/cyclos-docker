@@ -30,4 +30,7 @@ jobs:
         with:
           file: ./user_sync/Dockerfile
           push: true
-          tags: damnwar/cyclos-docker:latest 
+          tags: damnwar/cyclos-docker:latest
+      -
+        name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}            
