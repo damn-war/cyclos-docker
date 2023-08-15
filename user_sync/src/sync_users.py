@@ -5,14 +5,6 @@ import os
 import argparse
 
 
-def parse():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("import_folder", type=str, help="path to import folder")
-    parser.add_argument("export_folder", type=str, help="path to export folder")
-    args = parser.parse_args()
-    return args
-
-
 def normalize_json_data(json_data):
     if type(json_data) == list:
         return json_data
@@ -91,8 +83,8 @@ def json_dict_2_multiline_string(json_dict):
     return multiline_string[0:-1]
 
 
-def create_params_for_user(user_data):
-    group = get_group_for_user(user_data, path_to_mapfiles="/data/privileged_members/")
+def create_params_for_user(user_data, path_to_mapfiles):
+    group = get_group_for_user(user_data, path_to_mapfiles=path_to_mapfiles)
     email = user_data["inputEmail"]
     username = email
 
@@ -125,6 +117,10 @@ def get_api_credentials():
     return os.getenv("FSTL_CYCLOS_ADMIN_USERNAME"),os.getenv("FSTL_CYCLOS_ADMIN_PASSWORD")
 
 
+def get_folder_paths():
+    return os.getenv("IMPORT_FOLDER_PATH"),os.getenv("EXPORT_FOLDER_PATH"),os.getenv("PRIVILEGED_MAPPING_FOLDER")
+
+
 def get_export_path(import_path):
     if "cyclos_data" in import_path:
         json_export_path = import_path.replace("_cyclos_data", "_generated_users")
@@ -152,7 +148,7 @@ def check_if_folder_exist(folder_path):
         raise Exception(f"The folder {folder_path} does not exist!")
 
 
-def sync_users_for_single_file(json_import_path, fstl):
+def sync_users_for_single_file(json_import_path, fstl, privileged_mapping_folder):
     json_export_path = get_export_path(json_import_path)
     import_data = load_json(json_import_path)
     print(f"{len(import_data)} users in import file")
@@ -169,7 +165,7 @@ def sync_users_for_single_file(json_import_path, fstl):
                     continue
                 else:
                     if not check_if_user_exists(import_user, fstl):
-                        user_params = create_params_for_user(import_user)
+                        user_params = create_params_for_user(import_user, privileged_mapping_folder)
                         export_values = ["username", "password", "state"]
                         export_dict = {key: user_params[key] for key in export_values}
                         print(f"User does not exist and will be created: {export_dict}")
@@ -187,7 +183,7 @@ def sync_users_for_single_file(json_import_path, fstl):
             export_list = []
             for import_user in import_data:
                 if not check_if_user_exists(import_user, fstl):
-                    user_params = create_params_for_user(import_user)
+                    user_params = create_params_for_user(import_user, privileged_mapping_folder)
                     export_values = ["username", "password", "state"]
                     export_dict = {key: user_params[key] for key in export_values}
                     print(f"User does not exist and will be created: {export_dict}")
@@ -204,14 +200,11 @@ def sync_users_for_single_file(json_import_path, fstl):
 
 def main():
 
-    args = parse()
-
-    import_folder = args.import_folder
-    export_folder = args.export_folder 
-   
+    import_folder, export_folder, privileged_mapping_folder = get_folder_paths() 
     # check if improt and export folder exists at the given paths
     check_if_folder_exist(import_folder)
     check_if_folder_exist(export_folder)
+    check_if_folder_exist(privileged_mapping_folder)
 
     FSTL_CYCLOS_ADMIN_USERNAME, FSTL_CYCLOS_ADMIN_PASSWORD = get_api_credentials()
     print("Initializing API to interact with Cyclos FSTL Community.")
@@ -222,7 +215,7 @@ def main():
         file_path = os.path.join(import_folder, filename)
         # Ensure that it's a file and not a sub-directory
         if os.path.isfile(file_path):
-            sync_users_for_single_file(file_path, fstl)
+            sync_users_for_single_file(file_path, fstl, privileged_mapping_folder)
 
 
 if __name__ == "__main__":
