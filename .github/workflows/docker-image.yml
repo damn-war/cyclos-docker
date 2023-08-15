@@ -9,7 +9,7 @@ on:
 jobs:
   push_to_registry:
     name: Build Docker Image andp push to Docker Hub
-    runs-on: ADD-DOCKER-IMAGE-HERE 
+    runs-on: ubuntu-latest 
     steps:
       -
         name: Set up Docker Buildx
@@ -26,4 +26,4 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ADD-PUSH-LOCATION-AND-TAGS-HERE
+          tags: damnwar/cyclos-docker:latest 
