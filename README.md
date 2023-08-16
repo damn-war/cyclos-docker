@@ -34,7 +34,7 @@ The Container does the following:
 The Container can be started via docker or docker compose.
 
 To start the container via docker, run a statement like:\
-```docker run -v ./data/import:/import -v ./data/export:/export -v ./data/privileged_members:/privileged_members -e FSTL_CYCLOS_ADMIN_USERNAME=<ADMIN_USERNAME> -e FSTL_CYCLOS_ADMIN_PASSWORD=<ADMIN_PASSWORD> -e IMPORT_FOLDER_PATH=/import -e EXPORT_FOLDER_PATH=/export -e PRIVILEGED_MAPPING_FOLDER=/privileged_members cyclos-docker```
+```docker run -v ./data/import:/import -v ./data/export:/export -v ./data/privileged_members:/privileged_members -e FSTL_CYCLOS_ADMIN_USERNAME=<ADMIN_USERNAME> -e FSTL_CYCLOS_ADMIN_PASSWORD=<ADMIN_PASSWORD> -e IMPORT_FOLDER_PATH=/import -e EXPORT_FOLDER_PATH=/export -e PRIVILEGED_MAPPING_FOLDER=/privileged_members cyclos-docker```\
 As can be seen, there must be passed some information to the docker container:
 - import volume
 - export volume
