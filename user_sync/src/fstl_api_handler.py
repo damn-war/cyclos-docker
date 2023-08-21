@@ -111,16 +111,14 @@ class fstl_api:
             data["customValues"]["sorgeberechtigte"] = params["sorgeberechtigte"]
         if "kinder" in params:
             data["customValues"]["kinder"] = params["kinder"]
-        #response = requests.post(
-        #    f"{self.url}/users",
-        #    json=data,
-        #    headers={"Accept": "application/json", "Content-Type": "application/json"},
-        #    auth=self.auth,
-        #    verify=self.verify,
-        #)
-        print(data)
-        return True
-        #return evaluate_response(response)
+        response = requests.post(
+            f"{self.url}/users",
+            json=data,
+            headers={"Accept": "application/json", "Content-Type": "application/json"},
+            auth=self.auth,
+            verify=self.verify,
+        )
+        return evaluate_response(response)
 
     def add_broker_to_user(
         self, user: str, broker: str, main_broker: bool = False
