@@ -1,8 +1,8 @@
 version: "3.9"
 services:
   users_sync:
-    build: ./user_sync/
-      # image: damnwar/cyclos-docker:latest 
+    # build: ./user_sync/
+    image: damnwar/cyclos-docker:latest 
     volumes:
       - ${IMPORT_FOLDER_PATH}:${IMPORT_FOLDER_PATH_CONTAINER}
       - ${EXPORT_FOLDER_PATH}:${EXPORT_FOLDER_PATH_CONTAINER}
