@@ -97,7 +97,7 @@ def create_params_for_user(user_data, path_to_mapfiles):
     password = rpwd.readable_password(
         length=8, incl_upper=True, incl_digit=True, incl_punc=False
     )
-    group = get_group_for_user(user_data)
+    group = get_group_for_user(user_data, path_to_mapfiles)
     params = {
         "name": name,
         "username": username,
