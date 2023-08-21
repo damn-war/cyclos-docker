@@ -44,7 +44,7 @@ def check_if_user_exists(user_data, fstl):
     return fstl.check_if_user_exists(display_name)
 
 
-def get_group_for_user(user_data, path_to_mapfiles="/data/privileged_members/"):
+def get_group_for_user(user_data, path_to_mapfiles):
     priv_files = os.listdir(path_to_mapfiles)
     # check if user data is in list of privileged users
     # return the corresponding role
