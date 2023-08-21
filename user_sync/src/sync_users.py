@@ -53,7 +53,7 @@ def get_group_for_user(user_data, path_to_mapfiles="/data/privileged_members/"):
         return "Team_FSTL"
     elif account_type == "Eltern":
         for group in priv_files:
-            with open(f"{path_to_mapfiles}{group}", "r") as filehandler:
+            with open(f"{path_to_mapfiles}/{group}", "r") as filehandler:
                 for line in filehandler:
                     for element in user_data["parents"].items():
                         forename = element[1]["inputParentForename"]
