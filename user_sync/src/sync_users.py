@@ -2,7 +2,7 @@ import json
 from readable_password import readable_password as rpwd
 from fstl_api_handler import fstl_api
 import os
-import argparse
+import time
 
 
 def normalize_json_data(json_data):
@@ -209,13 +209,26 @@ def main():
     FSTL_CYCLOS_ADMIN_USERNAME, FSTL_CYCLOS_ADMIN_PASSWORD = get_api_credentials()
     print("Initializing API to interact with Cyclos FSTL Community.")
     fstl = fstl_api(FSTL_CYCLOS_ADMIN_USERNAME, FSTL_CYCLOS_ADMIN_PASSWORD)
-    
     # Iterate over all the files in the import directorz
     for filename in os.listdir(import_folder):
         file_path = os.path.join(import_folder, filename)
         # Ensure that it's a file and not a sub-directory
         if os.path.isfile(file_path):
             sync_users_for_single_file(file_path, fstl, privileged_mapping_folder)
+
+    known_files = set(os.listdir(import_folder))
+
+    while True:
+        current_files = set(os.listdir(import_folder))
+        new_files = current_files - known_files
+
+        for filename in new_files:
+            sync_users_for_single_file(file_path, fstl, privileged_mapping_folder)
+
+        known_files = current_files
+
+        time.sleep(5)
+
 
 
 if __name__ == "__main__":
