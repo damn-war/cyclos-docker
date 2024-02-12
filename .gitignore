@@ -6,3 +6,4 @@ venv/
 user-sync/data/
 */last_active_ads.json
 */data
+*/__pycache__

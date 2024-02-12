@@ -17,6 +17,8 @@ jobs:
            tags: "damnwar/cyclos-docker_user-sync:latest"
          - dockerfile: ./ad-notification/Dockerfile
            tags: "damnwar/cyclos-docker_ad-notification:latest"
+         - dockerfile: ./get-mail-adresses/Dockerfile
+           tags: "damnwar/cyclos-docker_get-mail-adresses:latest"
     steps:
       -
         name: Set up QEMU

@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  get-mail-adresses:
+    # build: .
+    image: damnwar/cyclos-docker_get-mail-adresses:latest 
+    volumes:
+      - ${EXPORT_PATH}:${EXPORT_PATH_CONTAINER}
+    environment:
+      - FSTL_CYCLOS_ADMIN_USERNAME=${FSTL_CYCLOS_ADMIN_USERNAME}
+      - FSTL_CYCLOS_ADMIN_PASSWORD=${FSTL_CYCLOS_ADMIN_PASSWORD}
+      - EXPORT_PATH=${EXPORT_PATH_CONTAINER}
