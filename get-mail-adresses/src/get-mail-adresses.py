@@ -3,7 +3,6 @@ from fstl_api_handler import fstl_api
 import os
 import argparse
 from datetime import datetime
-import pytz
 
 
 
