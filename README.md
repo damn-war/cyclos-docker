@@ -52,3 +52,12 @@ You can find a template of the env var file and a docker compose file in the rep
 In the docker-compose.yml you can choose if you want to build the container by yourself or if you want to pull from Dockerhub.
 After cloning this repo, defining the required env vars, volumes and have the list of privileged users (ask me) in the correct location, simply run
 `docker compose up`
+
+
+## Advertisement Notification Container
+
+to be done
+
+## Get Mail Adresses Container
+
+to be done
