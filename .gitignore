@@ -3,4 +3,5 @@ import/
 export/
 data/
 venv/
-user_sync/data/
+user-sync/data/
+ad-notificaiton/last_active_ads.json
