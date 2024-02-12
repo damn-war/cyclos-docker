@@ -11,7 +11,10 @@ def get_api_credentials():
     return os.getenv("FSTL_CYCLOS_ADMIN_USERNAME"),os.getenv("FSTL_CYCLOS_ADMIN_PASSWORD")
 
 def get_statefile_path():
-    return os.getenv("LAST_STATE_FILE_PATH_PATH")
+    return os.getenv("LAST_STATE_FILE_PATH")
+
+def get_export_path():
+    return os.getenv("EXPORT_PATH")    
 
 def get_active_advertisements(): 
     FSTL_CYCLOS_ADMIN_USERNAME, FSTL_CYCLOS_ADMIN_PASSWORD = get_api_credentials()
@@ -51,12 +54,17 @@ def find_new_ads(current_ads, last_saved_ads):
     last_saved_ids = {ad['id'] for ad in last_saved_ads}
     return [ad for ad in current_ads if ad['id'] not in last_saved_ids]
 
-def export_json():
-    pass
+def export_new_ads(export_folder, ads, timestamp):
+    if not os.path.exists(export_folder):
+        os.makedirs(export_folder)
+    export_filename = os.path.join(export_folder, f"new_ads_{timestamp}.json")
+    with open(export_filename, 'w') as file:
+        json.dump(ads, file)
 
 def main():
 
     filename = get_statefile_path()
+    export_folder = get_export_path()
     last_saved_ads, last_check = read_last_saved_ads(filename)
     current_ads = get_active_advertisements()
     new_ads = find_new_ads(current_ads, last_saved_ads)
@@ -68,6 +76,8 @@ def main():
         for ad in new_ads:
             print(ad)
         write_new_ads(filename, current_ads, now_iso)
+        export_new_ads(export_folder, new_ads, now_iso.replace(':', '-'))  # Ersetzt ':' in der Zeitstempel für Dateikompatibilität
+
     else:
         print("Keine neuen aktiven Anzeigen zum aktuellen Zeitpunkt.")
 
