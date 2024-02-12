@@ -3,7 +3,9 @@
 In this repository, a docker container for the users synchronization at the FSTL is provided.
 The user synchronization is implemented in Python by using the API.
 
-## Get the image
+## user sync container image
+ 
+### Get the image
 
 There are two options to get the container image.
 1. Pulling the image from Dockerhub via:\
@@ -11,9 +13,9 @@ There are two options to get the container image.
 2. Build the image yourself using the provided Dockerfile via:\
    ```docker build <PATH_TO_DOCKERFILE>```
 
-## Usage
+### Usage
 
-### What does the Container do?
+#### What does the Container do?
 
 There are 2 folder provided to tyhe container as volumes.
 One folder for the user to be imported into the FSTL Cyclos.
@@ -29,7 +31,7 @@ The Container does the following:
 - create user if necessary
 - write some user data to export files in export folder
 
-### Two options of usage
+#### Two options of usage
 
 The Container can be started via docker or docker compose.
 
