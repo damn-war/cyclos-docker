@@ -4,8 +4,7 @@ services:
     # build: .
     image: damnwar/cyclos-docker_ad-notification:latest 
     volumes:
-      - ${LAST_STATE_FILE_PATH}:${LAST_STATE_FILE_PATH_CONTAINER}
-      - ${EXPORT_PATH}:${EXPORT_PATH_CONTAINER}      
+      - ${DATA_PATH}:${DATA_PATH_CONTAINER}
     environment:
       - FSTL_CYCLOS_ADMIN_USERNAME=${FSTL_CYCLOS_ADMIN_USERNAME}
       - FSTL_CYCLOS_ADMIN_PASSWORD=${FSTL_CYCLOS_ADMIN_PASSWORD}
