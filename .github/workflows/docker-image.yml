@@ -2,14 +2,23 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "*" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "*" ]
 
 jobs:
   push_to_registry:
     name: Build Docker Image and push to Docker Hub
     runs-on: ubuntu-latest 
+    strategy:
+      matrix:
+       include:
+         - dockerfile: ./user-sync/Dockerfile
+           tags: "damnwar/cyclos-docker_user-sync:latest"
+         - dockerfile: ./ad-notification/Dockerfile
+           tags: "damnwar/cyclos-docker_ad-notification:latest"
+         - dockerfile: ./get-mail-adresses/Dockerfile
+           tags: "damnwar/cyclos-docker_get-mail-adresses:latest"
     steps:
       -
         name: Set up QEMU
@@ -28,9 +37,9 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v4
         with:
-          file: ./user_sync/Dockerfile
+          file: ${{ matrix.dockerfile }}
           push: true
-          tags: damnwar/cyclos-docker:latest
+          tags: ${{ matrix.tags }} 
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}            
