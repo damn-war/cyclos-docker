@@ -4,4 +4,4 @@ export/
 data/
 venv/
 user-sync/data/
-ad-notificaiton/last_active_ads.json
+ad-notificaiton/src/last_active_ads.json
