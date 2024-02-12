@@ -34,31 +34,40 @@ def get_active_advertisements():
 def read_last_saved_ads(filename):
     try:
         with open(filename, 'r') as file:
-            return json.load(file)
+            data = json.load(file)
+            return data.get('ads', []), data.get('last_update')
     except FileNotFoundError:
-        return []
+        return [], None
 
-def write_new_ads(filename, ads):
+def write_new_ads(filename, ads, last_update):
+    data = {
+        'ads': ads,
+        'last_update': last_update
+    }
     with open(filename, 'w') as file:
-        json.dump(ads, file)
+        json.dump(data, file)
 
 def find_new_ads(current_ads, last_saved_ads):
     last_saved_ids = {ad['id'] for ad in last_saved_ads}
     return [ad for ad in current_ads if ad['id'] not in last_saved_ids]
 
+def export_json():
+    pass
+
 def main():
 
     filename = get_statefile_path()
-    last_saved_ads = read_last_saved_ads(filename)
+    last_saved_ads, last_update = read_last_saved_ads(filename)
     current_ads = get_active_advertisements()
     new_ads = find_new_ads(current_ads, last_saved_ads)
+
+    now_iso = datetime.now(pytz.utc).isoformat()
 
     if new_ads:
         print("Es gibt neue aktive Anzeigen seit dem letzten Aufruf:")
         for ad in new_ads:
             print(ad)
-        # Aktualisieren Sie die Datei mit den aktuellen Anzeigen
-        write_new_ads(filename, current_ads)
+        write_new_ads(filename, current_ads, now_iso)
     else:
         print("Keine neuen aktiven Anzeigen zum aktuellen Zeitpunkt.")
 
