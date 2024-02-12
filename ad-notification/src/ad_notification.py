@@ -35,14 +35,14 @@ def read_last_saved_ads(filename):
     try:
         with open(filename, 'r') as file:
             data = json.load(file)
-            return data.get('ads', []), data.get('last_update')
+            return data.get('ads', []), data.get('last_check')
     except FileNotFoundError:
         return [], None
 
-def write_new_ads(filename, ads, last_update):
+def write_new_ads(filename, ads, last_check):
     data = {
         'ads': ads,
-        'last_update': last_update
+        'last_check': last_check
     }
     with open(filename, 'w') as file:
         json.dump(data, file)
@@ -57,7 +57,7 @@ def export_json():
 def main():
 
     filename = get_statefile_path()
-    last_saved_ads, last_update = read_last_saved_ads(filename)
+    last_saved_ads, last_check = read_last_saved_ads(filename)
     current_ads = get_active_advertisements()
     new_ads = find_new_ads(current_ads, last_saved_ads)
 
