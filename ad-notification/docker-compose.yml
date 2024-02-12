@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  users_sync:
+    # build: ./user_sync/
+    image: damnwar/cyclos-docker_ad-notification:latest 
+    volumes:
+      - ${LAST_STATE_FILE_PATH}:${LAST_STATE_FILE_PATH_CONTAINER}
+    environment:
+      - FSTL_CYCLOS_ADMIN_USERNAME=${FSTL_CYCLOS_ADMIN_USERNAME}
+      - FSTL_CYCLOS_ADMIN_PASSWORD=${FSTL_CYCLOS_ADMIN_PASSWORD}
+      - LAST_STATE_FILE_PATH_PATH=${LAST_STATE_FILE_PATH_CONTAINER}

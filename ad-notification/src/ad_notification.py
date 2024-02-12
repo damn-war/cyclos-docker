@@ -10,6 +10,9 @@ import pytz
 def get_api_credentials():
     return os.getenv("FSTL_CYCLOS_ADMIN_USERNAME"),os.getenv("FSTL_CYCLOS_ADMIN_PASSWORD")
 
+def get_statefile_path():
+    return os.getenv("LAST_STATE_FILE_PATH_PATH")
+
 def get_active_advertisements(): 
     FSTL_CYCLOS_ADMIN_USERNAME, FSTL_CYCLOS_ADMIN_PASSWORD = get_api_credentials()
     fstl = fstl_api(FSTL_CYCLOS_ADMIN_USERNAME, FSTL_CYCLOS_ADMIN_PASSWORD)
@@ -45,7 +48,7 @@ def find_new_ads(current_ads, last_saved_ads):
 
 def main():
 
-    filename = "last_active_ads.json"
+    filename = get_statefile_path()
     last_saved_ads = read_last_saved_ads(filename)
     current_ads = get_active_advertisements()
     new_ads = find_new_ads(current_ads, last_saved_ads)
