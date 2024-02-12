@@ -17,7 +17,6 @@ def get_mail_adresses():
     FSTL_CYCLOS_ADMIN_USERNAME, FSTL_CYCLOS_ADMIN_PASSWORD = get_api_credentials()
     fstl = fstl_api(FSTL_CYCLOS_ADMIN_USERNAME, FSTL_CYCLOS_ADMIN_PASSWORD)
     users = fstl.get_users()
-    print(users)
     mails = []
     for user in users:
         user_info = fstl.get_user_information(user["id"])
