@@ -10,6 +10,13 @@ jobs:
   push_to_registry:
     name: Build Docker Image and push to Docker Hub
     runs-on: ubuntu-latest 
+    strategy:
+      matrix:
+       include:
+         - dockerfile: ./user-sync/Dockerfile
+           tags: "damnwar/cyclos-docker_user-sync:latest"
+         - dockerfile: ./ad-notification/Dockerfile
+           tags: "damnwar/cyclos-docker_ad-notification:latest"
     steps:
       -
         name: Set up QEMU
@@ -28,9 +35,9 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v4
         with:
-          file: ./user_sync/Dockerfile
+          file: ${{ matrix.dockerfile }}
           push: true
-          tags: damnwar/cyclos-docker:latest
+          tags: ${{ matrix.tags }} 
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}            
